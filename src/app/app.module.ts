@@ -3,14 +3,29 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { FormsModule } from '@angular/forms'; //Para usu de [(ngModule)]
+
+import { SharedModule } from './shared/shared.module';
+import { HttpClientModule } from '@angular/common/http';
+
+//import { MaterialModule } from './material/material.module';
+import { LayoutComponent } from './layout/layout.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LayoutComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    SharedModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    //MaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -19,7 +19,7 @@ import { MaterialModule } from './../material/material.module';
     ReactiveFormsModule
   ], exports: [
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
   ]
 })
 export class SharedModule { }

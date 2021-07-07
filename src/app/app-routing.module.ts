@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes, PreloadAllModules } from '@angular/router';
 import { LayoutComponent } from './layout/layout.component';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -13,8 +14,13 @@ const routes: Routes = [
         pathMatch: 'full',
       },
       {
-        path: 'home',
-        loadChildren: () => import('./home/home.module').then(h => h.HomeModule)
+        path: 'home'
+        , canActivate: [AuthGuard]
+        , loadChildren: () => import('./home/home.module').then(h => h.HomeModule)
+      },
+      {
+        path: 'contacto'
+        , loadChildren: () => import('./contacto/contacto.module').then(c => c.ContactoModule)
       }
     ]
   },

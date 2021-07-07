@@ -1,38 +1,28 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http'; //HttpHeaders
 import { environment } from '../../../../environments/environment';
-import { BehaviorSubject } from 'rxjs';
-import { Router } from '@angular/router';
-
-import { LoginModel } from './../../../models/login.model';
+import { Usuario } from './../../../models/usuario.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsuarioService {
 
-  public isAuthenticated = new BehaviorSubject<boolean>(false);
-
 
   constructor(
-    private httpClient: HttpClient,
-    private router: Router
-  ) { }
-
-  async checkAuthenticated() {
-    return this.isAuthenticated;
+    private http: HttpClient,
+  ) {
   }
 
-  login(loginUser: LoginModel) {
-    return this.httpClient.post(`${environment.urlApi}/login/authenticate`, loginUser);
-  }
+  getUser(usuario: string, token: string) {
 
-  async logout() {
-    try {
-      this.isAuthenticated.next(false);
-      this.router.navigate(['login']);
-    } catch (err) {
-      console.error(err);
-    }
+    let headers = new HttpHeaders(
+      {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    )
+
+    return this.http.get(`${environment.urlApi}/usuario/obtenerUsuario?usuario=${usuario}`, { headers: headers });
   }
 }

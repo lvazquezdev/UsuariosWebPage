@@ -21,6 +21,6 @@ import { SharedModule } from './../shared/shared.module';
     LoginRoutingModule,
     FormsModule
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  //schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class LoginModule { }

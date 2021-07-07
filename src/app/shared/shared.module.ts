@@ -3,20 +3,22 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 
+import { MaterialModule } from './../material/material.module';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { MaterialModule } from './../material/material.module';
+
+
 
 @NgModule({
   declarations: [
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
   ],
   imports: [
     CommonModule,
     RouterModule,
     MaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ], exports: [
     HeaderComponent,
     FooterComponent,

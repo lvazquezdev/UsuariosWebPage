@@ -10,7 +10,6 @@ import { FormsModule } from '@angular/forms'; //Para usu de [(ngModule)]
 import { SharedModule } from './shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
 
-//import { MaterialModule } from './material/material.module';
 import { LayoutComponent } from './layout/layout.component';
 
 @NgModule({
@@ -25,7 +24,6 @@ import { LayoutComponent } from './layout/layout.component';
     SharedModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    //MaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]

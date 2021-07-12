@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes, PreloadAllModules } from '@angular/router';
 import { LayoutComponent } from './layout/layout.component';
 import { AuthGuard } from './guards/auth.guard';
+import { LoginGuard } from './guards/login.guard';
+import { RoleGuard } from './guards/role.guard';
 
 const routes: Routes = [
   {
@@ -15,11 +17,13 @@ const routes: Routes = [
       },
       {
         path: 'home'
-        , canActivate: [AuthGuard]
-        , loadChildren: () => import('./home/home.module').then(h => h.HomeModule)
+        , canActivate: [AuthGuard],
+        loadChildren: () => import('./home/home.module').then(h => h.HomeModule)
       },
       {
         path: 'contacto'
+        , canActivate: [RoleGuard]
+        , data: { expectedRole: 'Administrador' }
         , loadChildren: () => import('./contacto/contacto.module').then(c => c.ContactoModule)
       }
     ]
@@ -31,6 +35,7 @@ const routes: Routes = [
   },
   {
     path: 'login',
+    canActivate: [LoginGuard],
     loadChildren: () => import('./login/login.module').then(l => l.LoginModule)
   }
 ];

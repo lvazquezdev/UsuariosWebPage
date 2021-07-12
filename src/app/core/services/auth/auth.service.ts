@@ -4,46 +4,46 @@ import { environment } from '../../../../environments/environment';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { LoginModel } from './../../../models/login.model';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  /*
-  const httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-  };
-  */
-
-  public isAuthenticated: BehaviorSubject<boolean>;
-
   constructor(
     private http: HttpClient,
+    private jwtHelper: JwtHelperService,
     private router: Router
-  ) {
-    this.isAuthenticated = new BehaviorSubject<boolean>(false);
-  }
-
-  async checkAuthenticated() {
-    return this.isAuthenticated;
-  }
+  ) { }
 
   authenticate(loginUser: LoginModel) {
     return this.http.post(`${environment.urlApi}/authenticate`, loginUser);
   }
 
-  async logOut() {
+  isAuth(): boolean {
+    const token = localStorage.getItem('token') as string;;
+    if (this.jwtHelper.isTokenExpired(token) || !localStorage.getItem('token')) {
+      return false;
+    }
+    return true;
+  }
+
+  isLogged(): boolean {
+    const token = localStorage.getItem('token') as string;
+    if (!this.jwtHelper.isTokenExpired(token) || localStorage.getItem('token')) {
+      return true;
+    }
+    return false;
+  }
+
+  logOut() {
     try {
-      this.isAuthenticated.next(false);
-      this.router.navigate(['/login']);
+      localStorage.removeItem('token');
+      this.router.navigate(['login']);
     } catch (err) {
       console.error(err);
     }
-  }
-
-  isLoggedIn(): Observable<boolean> {
-    return this.isAuthenticated.asObservable();
   }
 
 }

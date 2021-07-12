@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { LoginModel } from '../../../models/login.model';
+import { Usuario } from '../../../models/usuario.model';
 import { AuthService } from '../../../core/services/auth/auth.service';
 import { UsuarioService } from '../../../core/services/usuario/usuario.service';
 
@@ -18,7 +19,8 @@ export class LoginComponent implements OnInit {
   //private formSubmitAttempt: boolean | any;
   //private returnUrl: string | any;
 
-  usuario: LoginModel | any;
+  //_login: LoginModel | any;
+  //usuario: Usuario | undefined;
 
   autorization: any;
 
@@ -36,7 +38,11 @@ export class LoginComponent implements OnInit {
       Usuario: ['', [Validators.required]],
       Password: ['', [Validators.required]],
     });
+
+    this.authService.logOut();
   }
+
+  get f() { return this.form.controls; }
 
   login() {
     if (this.form.valid) {
@@ -46,11 +52,16 @@ export class LoginComponent implements OnInit {
         this.authService.authenticate(usuario)
           .subscribe((res: any) => {
             if (res != undefined) {
-              this.autorization = res;
-              this.getUsuario(usuario["Usuario"], res["Token"]);
+              console.log(res["Token"]);
+              //localStorage.setItem('isLoggedIn', JSON.stringify(user));
+              localStorage.setItem('token', res["Token"]);
+              //this.authService.setLoggedIn(true);
+              //this.getUsuario(usuario["Usuario"], res["Token"]);
+              this.router.navigate(['home']);
+
+              //this.autorization = res;
+              //this.authService.isAuthenticated.next(true);
             }
-            //this.authService.isAuthenticated.next(true);
-            //this.router.navigate(['home']);
           },
             error => {
               alert('Usuario o Contraseña Invalido!');
@@ -77,15 +88,21 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  /*
   getUsuario(usuario: string, token: string) {
     this.usuarioService.getUser(usuario, token)
-      .subscribe(u => {
-        console.log(u);
+      .subscribe((user: any) => {
+        //this.usuario = { ...user };
+        localStorage.setItem('isLoggedIn', JSON.stringify(user));
+        localStorage.setItem('token', token);
+
+        this.router.navigate(['home']);
       },
         error => {
           alert('Error:' + error);
 
         });
   }
+  */
 
 }
